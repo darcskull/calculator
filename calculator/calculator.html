@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html>
+ <head>
+	<style>
+    
+    #buttonScene{
+    transform: translateX(750px);
+    }
+    
+    #scene{
+    perspective: 1800px;
+    perspective-origin: 0px 0px;
+    transform: translateX(600px) translateY(50px);
+    }
+    
+   #obj{
+    width:100px;
+    height:100px;
+    position: absolute;
+    transition: all 2s;
+    transform-style:preserve-3d;
+    -animation: anima 5s infinite linear;
+    }
+    
+    #obj:hover{
+    animation-play-state:paused;
+    }
+    
+    @keyframes anima{
+    0% { transform:rotateX(0deg) rotateY(0deg);}
+    100% { transform:rotateX(360deg) rotateY(360deg);}
+    }
+    
+    #sideBack{
+    width:500px;
+    height:600px;
+    }
+    
+    #sideFront{
+    width:500px;
+    height:600px;
+    transform: translateZ(50px);
+    }
+    
+    #sideRight{
+    width:50px;
+    height:600px;
+    transform: rotateY(90deg) translateZ(475px) translateX(-25px);
+    }
+    
+    #sideLeft{
+    width:50px;
+    height:600px;
+    transform: rotateY(90deg) translateZ(-25px) translateX(-25px);
+
+    }
+    
+    #sideTop{
+    width:500px;
+    height:50px;
+    transform: rotateX(90deg) translateZ(25px) translateY(25px);
+    }
+    
+    #sideDown{
+    width:500px;
+    height:50px;
+    transform: rotateX(-90deg) translateZ(500px) translateY(-25px);
+    }
+    
+    .sideStyle{
+    position: absolute;
+    animation: colorChange 4s infinite;
+    }
+    
+        @keyframes colorChange {
+ 	 		0% {
+    		background: #000000;
+  			}
+  			50% {
+    		background: #333333;
+  			}
+  			100% {
+    		background: #000000;
+  			}
+		}
+    
+    
+    #calculationScreen{
+    width:450px;
+    height:80px;
+    background: linear-gradient(to top, #ffffff, #808080);
+    text-align: right;
+    font-size: 35px;
+    overflow: hidden;
+    }
+    
+    .elementStyle{
+    position:absolute;
+    transform: translateZ(51px) translateX(25px) translateY(20px);
+    }
+    
+    .buttonStyle{
+    width:80px;
+    height:60px;
+    background: linear-gradient(to top, #ffffff, #808080);
+    top: 120px;
+    font-size: 40px;
+    text-align: center;
+    }
+    
+    .secondButton{
+    left: 120px
+    }
+    
+    .thirdButton{
+    left: 240px;
+    }
+    
+    .fourthButton{
+    left: 360px;
+    }
+    
+    .secondRoll{
+    top: 220px;
+    }
+    
+    .thirdRoll{
+    top: 320px;
+    }
+    
+    .fourthRoll{
+    top: 420px;
+    }
+    
+    #buttonClear{
+    font-size: 50px;
+    width:160px;
+    top: 500px;
+    left: 140px;
+    }
+    
+    
+    
+    </style>
+ </head>   
+<body>
+<div id="buttonScene">
+	<button onclick="rotateLeft()">Rotate Left</button>
+	<button onclick="rotateRight()">Rotate Right</button>
+</div>
+
+<div id="scene">
+	<div id="obj">
+		<div id="sideBack" class="sideStyle"></div>
+        <div id="sideFront" class="sideStyle">
+            <div id="calculationScreen" class="elementStyle"></div>
+            <div id="button1" class="buttonStyle elementStyle">1</div>
+            <div id="button2" class="buttonStyle elementStyle secondButton">2</div>
+            <div id="button3" class="buttonStyle elementStyle thirdButton">3</div>
+            <div id="buttonPlus" class="buttonStyle elementStyle fourthButton">+</div>
+            
+            <div id="button4" class="buttonStyle elementStyle secondRoll">4</div>
+            <div id="button5" class="buttonStyle elementStyle secondButton secondRoll">5</div>
+            <div id="button6" class="buttonStyle elementStyle thirdButton secondRoll">6</div>
+            <div id="buttonMinus" class="buttonStyle elementStyle fourthButton secondRoll">-</div>
+            
+            <div id="button7" class="buttonStyle elementStyle thirdRoll">7</div>
+            <div id="button8" class="buttonStyle elementStyle secondButton thirdRoll">8</div>
+            <div id="button9" class="buttonStyle elementStyle thirdButton thirdRoll">9</div>
+            <div id="buttonMultiplication" class="buttonStyle elementStyle fourthButton thirdRoll">*</div>
+            <div id="button0" class="buttonStyle elementStyle fourthRoll">0</div>
+            <div id="buttonPoint" class="buttonStyle elementStyle secondButton fourthRoll">.</div>
+            <div id="buttonEqual" class="buttonStyle elementStyle thirdButton fourthRoll">=</div>
+            <div id="buttonDivision" class="buttonStyle elementStyle fourthButton fourthRoll">/</div>
+            <div id="buttonClear" class="buttonStyle elementStyle">Clear</div>
+        </div>
+        <div id="sideRight" class="sideStyle"></div>
+        <div id="sideLeft" class="sideStyle"></div>
+        <div id="sideTop" class="sideStyle"></div>
+        <div id="sideDown" class="sideStyle"></div>
+	</div>
+</div>
+
+    <audio id="numberClick">
+        <source src="sounds/number-click.wav" type="audio/mpeg">
+    </audio>
+    <audio id="symbolClick">
+        <source src="sounds/symbol-click.wav" type="audio/mpeg">
+    </audio>
+    <audio id="clearClick">
+        <source src="sounds/clear-click.wav" type="audio/mpeg">
+    </audio>
+    <audio id="equalClick">
+        <source src="sounds/equal-click.wav" type="audio/mpeg">
+    </audio>    
+
+    <script>
+
+		function playNumberClick() { 
+        	var numberClick = document.getElementById("numberClick"); 
+            numberClick.play(); 
+		}
+
+        function playSymbolClick() { 
+        	var symbolClick = document.getElementById("symbolClick"); 
+            symbolClick.play(); 
+		}
+
+        function playClearClick() { 
+        	var clearClick = document.getElementById("clearClick"); 
+            clearClick.play(); 
+		}
+
+        function playEqualClick() { 
+        	var equalClick = document.getElementById("equalClick"); 
+            equalClick.play(); 
+		}
+        
+  		function rotation(transformStart, transformEnd) {
+    		obj.animate(
+      	[{ transform: transformStart }, { transform: transformEnd }],
+      	{
+        	duration: 6000,
+        	easing: "linear",
+        	fill: "forwards",
+     	 	}
+    	  );
+  		}
+        function rotateRight() {
+    	rotation("rotateY(0deg)", "rotateY(360deg)");
+        playEqualClick();
+  		}
+
+  		function rotateLeft() {
+    	rotation("rotateY(360deg)", "rotateY(0deg)");
+        playEqualClick();
+  		}
+        
+        function clickAnimation (buttonName) {
+        	var element = document.getElementById(buttonName);
+  		 	element.animate(
+    		[
+      			{ background: "linear-gradient(to top, #808080, #ffffff)" },
+      			{ background: "linear-gradient(to top, #ffff00, #ffffff)" },
+      			{ background: "linear-gradient(to top, #808080, #ffffff)" },
+    		],
+    		{
+      			duration: 1000,
+      			easing: "linear",
+    		}
+ 		 );
+  	}
+    
+    	function addNumber(number){
+        calculationScreen.innerText = calculationScreen.innerText + number;  
+        playNumberClick(); 
+        }
+        
+        function addSymbol(symbol){
+        if(calculationScreen.innerText!==""){
+        var lastSymbol = calculationScreen.innerText.substring(calculationScreen.innerText.length - 1);
+        	if(lastSymbol!=="+" && lastSymbol!=="-" && lastSymbol!=="/" && lastSymbol!=="*" && lastSymbol!=="."){
+        		calculationScreen.innerText = calculationScreen.innerText + symbol; 
+        	}
+        } else {
+        	if(symbol==="-"){
+        	calculationScreen.innerText = calculationScreen.innerText + symbol; 
+        	}
+        }
+        playSymbolClick();
+        }
+        
+    
+    	button1.onclick = function () {
+    clickAnimation ("button1");
+    addNumber(1);
+    }
+        button2.onclick = function () {
+    clickAnimation ("button2");
+    addNumber(2);
+    }
+        button3.onclick = function () {
+    clickAnimation ("button3");
+    addNumber(3);
+    }
+        button4.onclick = function () {
+    clickAnimation ("button4");
+    addNumber(4);
+    }
+        button5.onclick = function () {
+    clickAnimation ("button5");
+    addNumber(5);
+    }
+        button6.onclick = function () {
+    clickAnimation ("button6");
+    addNumber(6);
+    }
+        button7.onclick = function () {
+    clickAnimation ("button7");
+    addNumber(7);
+    }
+        button8.onclick = function () {
+    clickAnimation ("button8");
+    addNumber(8);
+    }
+        button9.onclick = function () {
+    clickAnimation ("button9");
+    addNumber(9);
+    }
+        button0.onclick = function () {
+    clickAnimation ("button0");
+    addNumber(0);
+    }
+        buttonClear.onclick = function () {
+    clickAnimation ("buttonClear");
+    calculationScreen.innerText = "";
+    playClearClick();
+    }
+        buttonPlus.onclick = function () {
+    clickAnimation ("buttonPlus");
+    addSymbol("+");
+    }
+        buttonMinus.onclick = function () {
+    clickAnimation ("buttonMinus");
+    addSymbol("-");
+    }
+        buttonPoint.onclick = function () {
+    clickAnimation ("buttonPoint");
+    addSymbol(".");
+    }
+        buttonEqual.onclick = function () {
+    clickAnimation ("buttonEqual");
+    playEqualClick();
+      	try {
+
+    		calculationScreen.innerText = eval(calculationScreen.innerText);
+
+  			} catch (error) {
+  				calculationScreen.innerText = "Error - Invalid operation";
+  		}
+    }
+        buttonDivision.onclick = function () {
+    clickAnimation ("buttonDivision");
+    addSymbol("/");
+    }
+        buttonMultiplication.onclick = function () {
+    clickAnimation ("buttonMultiplication");
+    addSymbol("*");
+    }   
+    
+	</script>
+</body>
+</html>
